@@ -34,6 +34,17 @@ ex3 = foldr maior_duracao 0 musicas
 ex4 = map so_musica (filter maior2 musicas)
 
 --Pretty-print música:
---WIP
+separa_autor :: String -> String -> String
+separa_autor autor atual = atual ++ " " ++ autor 
 
-main = return()
+pretty_print :: Musica -> String -> String
+pretty_print (musica, id_autor,duracao) formatador = formatador ++ "Musica: " ++ musica ++ ",\n" ++ "Autores:"++ (foldr separa_autor "" (bandas !! (id_autor-1))) ++ ",\n" ++ "Duracao: " ++ (show duracao) ++ "\n"
+
+ex5 = foldr pretty_print "" musicas
+
+main = do
+    putStr (show ex1 ++ "\n")
+    putStr (show ex2 ++ "\n")
+    putStr (show ex3 ++ "\n")
+    putStr (show ex4 ++ "\n")
+    putStr (ex5 ++ "\n")
