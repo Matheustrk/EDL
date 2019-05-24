@@ -66,15 +66,35 @@ mapA f t = case t of
     Folha         -> Folha
     (Galho v e d) -> (Galho (f v) (mapA f e) (mapA f d))
 
---WIP
---foldA :: (a -> b -> b) -> b -> Arvore a -> b
---foldA f v t = case t of
---    Folha         -> v
-    
+dobra_folha :: Int -> Int
+dobra_folha v = 2*v
 
+par :: Int -> Bool
+par v = v `mod` 2 == 0
 
+to_string :: Int -> String
+to_string v = show v
+
+a1 = (mapA dobra_folha arvore1)
+a2 = (mapA par arvore1)
+a3 = (mapA to_string arvore1)
+
+foldA :: (a -> b -> b) -> b -> Arvore a -> b
+foldA f acc t = case t of
+    Folha         -> acc
+    (Galho val e d) -> (f val (foldA f (foldA f acc e) d))
+
+soma_num :: Num a => Ord a => a -> a -> a
+soma_num x y = x + y
+a4 = (foldA soma_num 0 arvore2)
+
+tolista :: (Int -> [Int] -> [Int])
+tolista v l = v:l
+a5 = (foldA tolista [] arvore1)
 
 main = do
+    (print a4)
+    (print a5)
     (print (soma arvore1))
     (print (dobra arvore1))
     (print (possui arvore1 8))
